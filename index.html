@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin="" />
+    <link rel="stylesheet" href="./css/style.css">
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
+
+
+
+</head>
+<body>
+
+    <div id="map"></div>
+<script src="./map.js"></script>
+<script>
+  
+    let geo = navigator.geolocation;
+    
+    // geo.getCurrentPosition((pos)=>{             
+    //     let myLocation =[pos.coords.latitude,pos.coords.longitude];     
+    //     console.log(myLocation,pos);   
+    //     let map = L.map('map').setView(myLocation, 20);
+    //     L.circle(myLocation, {radius: 10}).addTo(map);
+    //     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    //             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    //     }).addTo(map);
+
+    //     L.geoJSON(algo,{}).addTo(map);   
+    // })
+
+    function success(pos) {
+                     
+        let myLocation =[pos.coords.latitude,pos.coords.longitude];  
+        let original = [7.908822, -72.497800];
+        let correccion = [myLocation[0]- 7.908822,myLocation[1]- -72.497800]   
+        console.log(correccion,original,myLocation,pos.coords.accuracy,pos);   
+        let map = L.map('map').setView(myLocation, 20);
+        L.circle(myLocation, {radius: 10}).addTo(map);
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        L.geoJSON(algo,{}).addTo(map);
+    }
+
+function error() {
+  alert('No hay posición disponible.');
+}
+
+const opciones = {
+  enableHighAccuracy: true,
+  maximumAge: 0,
+  timeout: 27000
+};
+
+const watchID = geo.getCurrentPosition(success, error, opciones);
+</script>    
+    
+</body>
+</html>
